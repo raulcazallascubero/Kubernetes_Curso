@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  nginx:
+    container_name: nginx
+    image: nginx
+    ports: 
+      - "8080:8080"
+      - "8081:8081"
+      - "8082:8082"
+    volumes:
+      - "$PWD/nginx-data:/usr/share/nginx/html"
+      - "$PWD/nginx-conf/nginx.conf:/etc/nginx/nginx.conf"
+    networks:
+      - net
+
+networks:
+  net: 

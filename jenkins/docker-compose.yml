@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins:lts
+    volumes:
+      - "$PWD/jenkins-data:/var/jenkins_home"
+    ports:
+      - "8080:8080"
+    networks:
+      - net
+networks:
+  net:
