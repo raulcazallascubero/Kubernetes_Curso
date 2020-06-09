@@ -13,3 +13,7 @@ sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 #	    --discovery-token-ca-cert-hash sha256:3727eb25cc8fb79746f6eaf23d8039576b9228f077a6980b8fe4699d3d38d464 
 #Configurar red flannel
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+#Para pruebas y que nodo maestro pueda tener containers
+#kubectl taint nodes --all node-role.kubernetes.io/master-
+

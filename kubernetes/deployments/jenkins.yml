@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: jenkins
+spec:
+  containers:
+    - name: jenkins
+      image: jenkins/jenkins:lts
+      #volumes:
+      #- "$PWD/jenkins-data:/var/jenkins_home"
+      ports:
+        - containerPort: 8080
+
+
