@@ -11,6 +11,7 @@ data:
       usuario=raul@raul.com
       password=raulillo
 ---
+#kubectl create secret generic secret-fedora --from-literal=password=rauilillo
 apiVersion: v1
 kind: Secret
 metadata:
