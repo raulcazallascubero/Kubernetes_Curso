@@ -1,3 +1,24 @@
+        
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configuracion-fedora
+data:
+    usuario: raul
+    emailserver.properties: |
+      smtp=smtp.raul.com
+      usuario=raul@raul.com
+      password=raulillo
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret-fedora
+data:
+  password: cmF1bGlsbG8K
+  
+---
 apiVersion: v1
 kind: Pod
 metadata:
@@ -17,6 +38,18 @@ spec:
       volumeMounts:
         - name: compartido
           mountPath: /compartido
+      env:
+        - name: usuariodb
+          valueFrom:
+            configMapKeyRef:
+              name: configuracion-fedora
+              key: usuario
+        - name: passworddb
+          valueFrom:
+            secretKeyRef:
+              name: secret-fedora
+              key: password
+              
     - name: fedora
       image: fedora:26
       command: ['sh', '-c', 'sleep 6000;']
@@ -25,6 +58,11 @@ spec:
           mountPath: /compartido
         - name: docker
           mountPath: /var/lib/docker
+        - name: configuracion
+          mountPath: /configuracion
+        - name: secretos
+          mountPath: /secretos
+          
   volumes:
     - name: compartido
       emptyDir: 
@@ -34,3 +72,10 @@ spec:
       hostPath:
         path: /var/lib/docker
         type: Directory #Ese directorio debe existir
+    - name: configuracion
+      configMap:
+        name: configuracion-fedora
+    - name: secretos
+      secret:
+        secretName: secret-fedora
+    
