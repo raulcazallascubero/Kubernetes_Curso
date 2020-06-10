@@ -23,8 +23,14 @@ spec:
       volumeMounts:
         - name: compartido
           mountPath: /compartido
+        - name: docker
+          mountPath: /var/lib/docker
   volumes:
     - name: compartido
       emptyDir: 
         medium: Memory
         sizeLimit: 1Mi
+    - name: docker
+      hostPath:
+        path: /var/lib/docker
+        type: Directory #Ese directorio debe existir
