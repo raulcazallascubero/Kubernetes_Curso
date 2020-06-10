@@ -8,10 +8,23 @@ spec:
   containers:
     - name: nginx
       image: nginx
-      #volumes:
-      #- "$PWD/jenkins-data:/var/jenkins_home"
+      resources:
+        limits:
+          cpu: 1
+          memory: 1Gi
       ports:
         - containerPort: 80
+      volumeMounts:
+        - name: compartido
+          mountPath: /compartido
     - name: fedora
       image: fedora:26
       command: ['sh', '-c', 'sleep 6000;']
+      volumeMounts:
+        - name: compartido
+          mountPath: /compartido
+  volumes:
+    - name: compartido
+      emptyDir: 
+        medium: Memory
+        sizeLimit: 1Mi
