@@ -64,7 +64,7 @@ spec:
           imagePullPolicy: IfNotPresent
           command: ['sh', '-c', 'apt update && apt install git -y && git clone https://github.com/IvanciniGT/datosNginx /configuracion']
           volumeMounts:
-            - mountPath: /configuracion
+            - mountPath: /configuracion2
               name: logs
           
       volumes:

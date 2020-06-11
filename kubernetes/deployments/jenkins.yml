@@ -12,5 +12,31 @@ spec:
       #- "$PWD/jenkins-data:/var/jenkins_home"
       ports:
         - containerPort: 8080
-
+  #No recomendada
+  #nodeSelector:
+  #  tipodisco: hhd
+  
+  affinity:
+    nodeAffinity:
+  #    requiredDuringSchedulingIgnoredDuringExecution: #Obliga a que se cumpla lo que definamos para realizar la asignacion
+        #Condiciones
+  #      nodeSelectorTerms:
+  #       - matchExpressions:
+  #           - key: tipodisco
+  #             operator: In # NotIn, Exists, DoesNotExists, Gt, Lt
+  #             values:
+  #               - hhd
+  #               - fibre-channel
+      preferredDuringSchedulingIgnoredDuringExecution: # Preferencia a lo que definamos al realizar la asignacion
+        - weight: 10
+          preference:
+            matchExpressions:
+              - key: tipodisco
+                operator: In # NotIn, Exists, DoesNotExists, Gt, Lt
+                values:
+                  - cloud
+      
+    #podAffinity:
+    #podAntiAffinity:
+  
 
