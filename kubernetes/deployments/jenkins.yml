@@ -36,7 +36,16 @@ spec:
                 values:
                   - cloud
       
-    #podAffinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution: #Obliga a que se cumpla lo que definamos para realizar la asignacion
+        #Condiciones
+        - labelSelector:
+            - matchExpressions:
+                - key: app
+                  operator: In # NotIn, Exists, DoesNotExists, Gt, Lt
+                  values:
+                    - nginx
+          topologyKey: kubernetes.io/hostname #Label que exista en el nodo
     #podAntiAffinity:
   
 
