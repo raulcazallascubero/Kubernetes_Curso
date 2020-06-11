@@ -21,6 +21,22 @@ spec:
           image: nginx
           ports:
             - containerPort: 80
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html
+              name: web
+      #Contenedores que ejecutan algo antes de iniciar el pod y se ejecutan en orden, pensados para lanzar comandos.
+      initContainers:
+        - name: clonadorweb
+          image: ubuntu
+          imagePullPolicy: IfNotPresent
+          command: ['sh', '-c', 'apt update && apt install git -y && git clone https://github.com/IvanciniGT/datosNginx /configuracion']
+          volumeMounts:
+            - mountPath: /configuracion
+              name: web
+          
+      volumes:
+        - name: web
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
