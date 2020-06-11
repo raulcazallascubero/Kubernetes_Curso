@@ -1,3 +1,32 @@
+#Administrador debe montar esos tipos de almacenamiento persistente, para que desarrollo lo utilice
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mis-volumenes-aws
+spec:
+  storageClassName: redundante
+  capacity:
+      storage: 100Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath: #En pro sin sentido, siempre un almacenamiento cloud o red
+    path: /redundante
+
+#Desarrollador define el volumen
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: volumen-logs-nginx
+spec:
+  resources:
+    requests:
+      storage: 10Mi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: redundante #Suministrado por el administrador
+    
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -24,6 +53,10 @@ spec:
           volumeMounts:
             - mountPath: /usr/share/nginx/html
               name: web
+          volumeMounts:
+            - mountPath: /logs
+              name: web    
+              
       #Contenedores que ejecutan algo antes de iniciar el pod y se ejecutan en orden, pensados para lanzar comandos.
       initContainers:
         - name: clonadorweb
@@ -32,11 +65,15 @@ spec:
           command: ['sh', '-c', 'apt update && apt install git -y && git clone https://github.com/IvanciniGT/datosNginx /configuracion']
           volumeMounts:
             - mountPath: /configuracion
-              name: web
+              name: logs
           
       volumes:
         - name: web
           emptyDir: {}
+        #Peticion de volumen  
+        - name: logs
+          persistentVolumeClaim:
+            claimName: volumen-logs-nginx
 ---
 apiVersion: v1
 kind: Service
