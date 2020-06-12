@@ -46,6 +46,6 @@ spec:
                   values:
                     - nginx
           topologyKey: kubernetes.io/hostname #Label que exista en el nodo
-    #podAntiAffinity:
+    #podAntiAffinity: #igual qu el podAffinity pero en negativo
   
 
