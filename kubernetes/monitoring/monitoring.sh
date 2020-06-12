@@ -1,5 +1,5 @@
 cd ..
-kubectl apply -f kube-state/
+kubectl apply -f kubestate/
 kubectl get deployments kube-state-metrics -n kube-system
 
 

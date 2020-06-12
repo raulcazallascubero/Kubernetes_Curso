@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"k8s-app":"kubernetes-dashboard"},"name":"kubernetes-dashboard","namespace":"kubernetes-dashboard"},"spec":{"ports":[{"port":443,"targetPort":8443}],"selector":{"k8s-app":"kubernetes-dashboard"}}}
+  creationTimestamp: "2020-06-12T09:51:37Z"
+  labels:
+    k8s-app: kubernetes-dashboard
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
+        f:labels:
+          .: {}
+          f:k8s-app: {}
+      f:spec:
+        f:ports:
+          .: {}
+          k:{"port":443,"protocol":"TCP"}:
+            .: {}
+            f:port: {}
+            f:protocol: {}
+            f:targetPort: {}
+        f:selector:
+          .: {}
+          f:k8s-app: {}
+        f:sessionAffinity: {}
+        f:type: {}
+    manager: kubectl
+    operation: Update
+    time: "2020-06-12T09:51:37Z"
+  name: kubernetes-dashboard
+  namespace: kubernetes-dashboard
+  resourceVersion: "132039"
+  selfLink: /api/v1/namespaces/kubernetes-dashboard/services/kubernetes-dashboard
+  uid: a83763c5-0f4d-47f1-8d25-7c248668a6a0
+spec:
+  clusterIP: 10.108.144.105
+  ports:
+  - nodePort: 30010
+    port: 443
+    protocol: TCP
+    targetPort: 8443
+  selector:
+    k8s-app: kubernetes-dashboard
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
