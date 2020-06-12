@@ -27,3 +27,14 @@ spec:
     volumeMounts:
     - name: volumen-nfs
       mountPath: /carpeta-del-nfs
+      
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution: #Obliga a que se cumpla lo que definamos para realizar la asignacion
+        #Condiciones
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: cliente-nfs
+                operator: In # NotIn, Exists, DoesNotExists, Gt, Lt
+                values:
+                  - "true"

@@ -1,0 +1,47 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nfs-client-provisioner
+spec:
+  selector:
+    matchLabels:
+      app: nfs-client-provisioner
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: nfs-client-provisioner
+    spec:
+      serviceAccountName: nfs-client-provisioner
+      containers:
+        - name: nfs-client-provisioner
+          image: quay.io/external_storage/nfs-client-provisioner:latest
+          volumeMounts:
+            - name: nfs-client-root
+              mountPath: /persistentvolumes
+          env:
+            - name: PROVISIONER_NAME
+              value: minfsserver
+            - name: NFS_SERVER
+              value: 172.31.30.152
+            - name: NFS_PATH
+              value: /mnt/kubernetes #Ruta en el servidor NFS
+      
+      volumes:
+        - name: nfs-client-root
+          nfs:
+            server: 172.31.30.152
+            path: /mnt/kubernetes #Donde lo va a montar en el pod
+            
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution: #Obliga a que se cumpla lo que definamos para realizar la asignacion
+            #Condiciones
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: cliente-nfs
+                    operator: In # NotIn, Exists, DoesNotExists, Gt, Lt
+                    values:
+                      - "true"

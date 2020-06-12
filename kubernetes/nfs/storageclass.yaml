@@ -3,4 +3,4 @@ kind: StorageClass
 metadata:
     name: minfs
 provisioner: minfsserver
-reclaimPolicy: Delete
+reclaimPolicy: Delete #CUando alguien pida volumen se da y cuando el pod se destruya el volumen se borra si no se quiere borrar con el pod se usa Retain
