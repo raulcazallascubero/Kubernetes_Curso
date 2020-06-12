@@ -27,13 +27,13 @@ spec:
             - name: NFS_SERVER
               value: 172.31.30.152
             - name: NFS_PATH
-              value: /mnt/kubernetes #Ruta en el servidor NFS
+              value: /mnt/kubernetes #Donde lo va a montar en el pod 
       
       volumes:
         - name: nfs-client-root
           nfs:
             server: 172.31.30.152
-            path: /mnt/kubernetes #Donde lo va a montar en el pod
+            path: /mnt/kubernetes #Ruta en el servidor NFS
             
       affinity:
         nodeAffinity:
